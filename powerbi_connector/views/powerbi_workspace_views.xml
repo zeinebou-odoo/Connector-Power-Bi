@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_powerbi_workspace_tree" model="ir.ui.view">
+            <field name="name">powerbi.workspace.tree</field>
+            <field name="model">powerbi.workspace</field>
+            <field name="arch" type="xml">
+                <list string="Workspaces Power BI">
+                    <field name="name"/>
+                    <field name="workspace_id"/>
+                    <field name="is_on_dedicated_capacity"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_powerbi_workspace_form" model="ir.ui.view">
+            <field name="name">powerbi.workspace.form</field>
+            <field name="model">powerbi.workspace</field>
+            <field name="arch" type="xml">
+                <form string="Workspace Power BI">
+                    <header>
+                        <button type="object" name="action_view_reports" class="oe_stat_button" icon="fa-bar-chart">
+                            <field name="report_count" widget="statinfo" string="Rapports"/>
+                        </button>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="workspace_id"/>
+                                <field name="is_on_dedicated_capacity"/>
+                                <field name="state"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Rapports">
+                                <field name="report_ids">
+                                    <list editable="bottom">
+                                        <field name="name"/>
+                                        <field name="report_id"/>
+                                        <field name="dataset_id"/>
+                                        <field name="url"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_powerbi_workspace_search" model="ir.ui.view">
+            <field name="name">powerbi.workspace.search</field>
+            <field name="model">powerbi.workspace</field>
+            <field name="arch" type="xml">
+                <search string="Rechercher Workspaces">
+                    <field name="name"/>
+                    <field name="workspace_id"/>
+                    <filter string="Actifs" name="active" domain="[('state','=','active')]"/>
+                    <filter string="Supprimés" name="deleted" domain="[('state','=','deleted')]"/>
+                    <group expand="0" string="Regrouper par">
+                        <filter string="Statut" name="group_by_state" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_powerbi_workspace_kanban" model="ir.ui.view">
+            <field name="name">powerbi.workspace.kanban</field>
+            <field name="model">powerbi.workspace</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_record_title">
+                                    <field name="name"/>
+                                </div>
+                                <div class="text-muted">Workspace ID: <field name="workspace_id"/></div>
+                                <div>
+                                    <span t-attf-class="badge #{record.state.raw_value == 'active' and 'badge-success' or 'badge-secondary'}">
+                                        <field name="state"/>
+                                    </span>
+                                </div>
+                                <div class="o_kanban_counter">
+                                    <span class="o_stat_value"><field name="report_count"/></span>
+                                    <span class="o_stat_text">Rapports</span>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="action_powerbi_workspaces" model="ir.actions.act_window">
+            <field name="name">Workspaces Power BI</field>
+            <field name="res_model">powerbi.workspace</field>
+            <field name="view_mode">kanban,list,form</field>
+        </record>
+
+        <menuitem id="menu_powerbi_workspaces"
+                  name="Workspaces"
+                  parent="powerbi_connector.menu_powerbi_root"
+                  action="action_powerbi_workspaces"
+                  sequence="12"/>
+    </data>
+</odoo>
+
+

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_powerbi_settings_all,powerbi.settings.all,model_powerbi_settings,base.group_user,1,1,1,1
+access_powerbi_report_all,powerbi.report.all,model_powerbi_report,base.group_user,1,1,1,1
+access_powerbi_workspace_all,powerbi.workspace.all,model_powerbi_workspace,base.group_user,1,1,1,1

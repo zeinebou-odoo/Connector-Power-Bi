@@ -1,0 +1,19 @@
+
+<odoo>
+    <data noupdate="1">
+        <!-- Groupe Power BI Manager -->
+        <record id="group_powerbi_manager" model="res.groups">
+            <field name="name">Power BI Manager</field>
+            <field name="category_id" ref="base.module_category_tools"/>
+            <field name="comment">Peut configurer et gérer le connecteur Power BI</field>
+        </record>
+
+        <!-- Groupe Power BI User -->
+        <record id="group_powerbi_user" model="res.groups">
+            <field name="name">Power BI User</field>
+            <field name="category_id" ref="base.module_category_tools"/>
+            <field name="comment">Peut consulter les configurations Power BI</field>
+            <field name="implied_ids" eval="[(4, ref('group_powerbi_manager'))]"/>
+        </record>
+    </data>
+</odoo>

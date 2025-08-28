@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_powerbi_report_tree" model="ir.ui.view">
+            <field name="name">powerbi.report.tree</field>
+            <field name="model">powerbi.report</field>
+            <field name="arch" type="xml">
+                <list string="Rapports Power BI">
+                    <field name="name"/>
+                    <field name="workspace_ref_id"/>
+                    <field name="report_id"/>
+                    <field name="dataset_id"/>
+                    <field name="url"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_powerbi_report_form" model="ir.ui.view">
+            <field name="name">powerbi.report.form</field>
+            <field name="model">powerbi.report</field>
+            <field name="arch" type="xml">
+                <form string="Rapport Power BI">
+                    <header>
+                        <button name="action_open_viewer" type="object" string="Ouvrir" class="btn-primary"/>
+                        <button name="action_sync_from_powerbi" type="object" string="Synchroniser" class="btn-secondary"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="workspace_ref_id"/>
+                                <field name="url"/>
+                                <field name="workspace_id"/>
+                                <field name="report_id"/>
+                                <field name="dataset_id"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="embed_html" nolabel="1" readonly="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_powerbi_report_search" model="ir.ui.view">
+            <field name="name">powerbi.report.search</field>
+            <field name="model">powerbi.report</field>
+            <field name="arch" type="xml">
+                <search string="Rechercher Rapports">
+                    <field name="name"/>
+                    <field name="report_id"/>
+                    <field name="dataset_id"/>
+                    <filter string="Sans URL" name="no_url" domain="[('url','=',False)]"/>
+                    <group expand="0" string="Regrouper par">
+                        <filter string="Workspace" name="group_by_workspace" context="{'group_by': 'workspace_ref_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_powerbi_reports" model="ir.actions.act_window">
+            <field name="name">Rapports Power BI</field>
+            <field name="res_model">powerbi.report</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="menu_powerbi_reports"
+                  name="Rapports"
+                  parent="powerbi_connector.menu_powerbi_root"
+                  action="action_powerbi_reports"
+                  sequence="15"/>
+    </data>
+</odoo>
+
